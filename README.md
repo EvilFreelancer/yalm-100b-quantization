@@ -17,6 +17,20 @@ sequential run of a seed text, with the results displayed to the user upon compl
 involves optimizing the Megatron-LM framework to enable it to run not only on GPUs but also on CPUs, or altering the
 logic of VRAM reservation to match the actual memory footprint of the weights.
 
+## Table of Contents
+
+* [Whats inside](#Whats-inside)
+* [Installation](#Installation)
+    * [Clone repository](#Clone-repository)
+    * [Downloading checkpoint](#Downloading-checkpoint)
+    * [Docker](#Docker)
+    * [Local setup](#Local-setup)
+* [How to use](#How-to-use)
+    * [Quantization only](#Quantization-only)
+    * [Quantization and Pruning](#Quantization-and-Pruning)
+* [Roadmap](#Roadmap)
+* [Links](#Links)
+
 ## Whats inside
 
 * `quantize.py` - script for quantization weights to 8/4/2 bits
@@ -85,6 +99,8 @@ To set up the project using Docker, follow the steps below:
 
 ### Local setup
 
+Or you can set up the project locally.
+
 Requirements:
 
 * Python 3.8 (or 3.9)
@@ -116,6 +132,41 @@ To set up the project locally, follow the steps below:
    pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --global-option="--cpp_ext" --global-option="--cuda_ext" ./apex
    ```
 
+## How to use
+
+### Quantization only
+
+The script requires four parameters:
+
+* `input_dir`: The directory containing the original checkpoints.
+* `output_dir`: The directory where the quantized and pruned checkpoints will be saved.
+* `bits`: The bit depth for quantization. Possible choices are 8, 4, and 2.
+
+```shell
+python quantize.py ./YaLM-100B/download/yalm100b_checkpoint/ ./data 8
+```
+
+### Quantization and Pruning
+
+The script requires four parameters:
+
+* `input_dir`: The directory containing the original checkpoints.
+* `output_dir`: The directory where the quantized and pruned checkpoints will be saved.
+* `bits`: The bit depth for quantization. Possible choices are 8, 4, and 2.
+* `prune_ratio`: The pruning ratio.
+
+```shell
+python quantize_prune.py ./YaLM-100B/download/yalm100b_checkpoint/ ./data 8 0.1
+```
+
+### Model inference
+
+```shell
+sh interactive.sh
+```
+
+It will run `predict.py` script with required arguments and start interactive inference.
+
 ## Roadmap
 
 The project is currently at an intermediate stage. Here is an overview of the development progress:
@@ -124,12 +175,12 @@ The project is currently at an intermediate stage. Here is an overview of the de
 * [x] Model pruning script
 * [x] Script for standard model execution using Megatron-LM
 * [ ] Script for quantized model execution using PyTorch only
-  * [ ] Implementation for loading model layers sequentially rather than all at once
-  * [ ] Parsing results and displaying them to the user
+    * [ ] Implementation for loading model layers sequentially rather than all at once
+    * [ ] Parsing results and displaying them to the user
 * [ ] Tunes of Megatron-LM framework
-  * [ ] Enable it to run on CPUs
+    * [ ] Enable it to run on CPUs
 
-  * [ ] Reduce VRAM reservation
+    * [ ] Reduce VRAM reservation
 
 The final points in the roadmap present significant areas for future development. Sequential loading of model layers
 could provide a solution to the current memory limitation issue, allowing for the execution of larger models on hardware
