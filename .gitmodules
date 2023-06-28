@@ -1,0 +1,6 @@
+[submodule "apex"]
+	path = apex
+	url = https://github.com/NVIDIA/apex.git
+[submodule "YaLM-100B"]
+	path = YaLM-100B
+	url = https://github.com/yandex/YaLM-100B.git

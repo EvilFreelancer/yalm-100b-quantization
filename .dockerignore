@@ -1,0 +1,9 @@
+.git
+.idea
+__pycache__
+/venv/
+/cache/
+/data/
+/YaLM-100B/
+/apex/
+docker-compose.yml

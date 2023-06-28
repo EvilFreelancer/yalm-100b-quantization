@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+
+  app:
+    restart: "unless-stopped"
+    build:
+      context: .
+    volumes:
+      - ./cache:/root/.cache
+      - ./:/app
+      - /backup/YaLM-100B:/YaLM-100B
+      - /backup/YaLM-100B-4bit:/YaLM-100B-4bit
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
