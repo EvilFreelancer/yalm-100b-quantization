@@ -136,7 +136,7 @@ To set up the project locally, follow the steps below:
 
 ### Quantization only
 
-The script requires four parameters:
+The script requires three parameters:
 
 * `input_dir`: The directory containing the original checkpoints.
 * `output_dir`: The directory where the quantized and pruned checkpoints will be saved.
@@ -179,7 +179,6 @@ The project is currently at an intermediate stage. Here is an overview of the de
     * [ ] Parsing results and displaying them to the user
 * [ ] Tunes of Megatron-LM framework
     * [ ] Enable it to run on CPUs
-
     * [ ] Reduce VRAM reservation
 
 The final points in the roadmap present significant areas for future development. Sequential loading of model layers
